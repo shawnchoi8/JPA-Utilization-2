@@ -1,7 +1,7 @@
-package jpabook.jpashop.Service;
+package jpabook.jpashop.service;
 
 import jakarta.persistence.EntityManager;
-import jpabook.jpashop.Repository.OrderRepository;
+import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
