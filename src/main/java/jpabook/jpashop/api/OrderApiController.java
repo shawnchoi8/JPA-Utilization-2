@@ -21,6 +21,9 @@ public class OrderApiController {
 
     private final OrderRepository orderRepository;
 
+    /**
+     * expose entity
+     */
     @GetMapping("/api/v1/orders")
     public List<Order> ordersV1() {
         List<Order> all = orderRepository.findAllByString(new OrderSearch());
@@ -36,6 +39,10 @@ public class OrderApiController {
         return all;
     }
 
+    /**
+     * entity -> dto
+     * The performance isn't there yet because too many queries are being executed.
+     */
     @GetMapping("/api/v2/orders")
     public List<OrderDto> ordersV2() {
         List<Order> orders = orderRepository.findAllByString(new OrderSearch());
