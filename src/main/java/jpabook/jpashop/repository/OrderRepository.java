@@ -107,4 +107,16 @@ public class OrderRepository {
                                 " join fetch o.delivery d", Order.class)
                 .getResultList();
     }
+
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                        "select distinct o from Order o" +
+                                " join fetch o.member m" +
+                                " join fetch o.delivery d" + // 여기까지는 xToOne
+                                " join fetch o.orderItems oi" + // order : orderItems = 1 : n
+                                " join fetch oi.item i", Order.class)
+                .setFirstResult(1)
+                .setMaxResults(100)
+                .getResultList();
+    }
 }

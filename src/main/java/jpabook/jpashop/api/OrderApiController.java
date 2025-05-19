@@ -53,6 +53,19 @@ public class OrderApiController {
         return result;
     }
 
+    /**
+     * Entity to DTO conversion with "fetch join" for performance
+     */
+    @GetMapping("/api/v3/orders")
+    public List<OrderDto> ordersV3() {
+        List<Order> orders = orderRepository.findAllWithItem();
+        List<OrderDto> result = orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
     @Getter
     static class OrderDto {
         private Long orderId;
