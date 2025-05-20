@@ -95,6 +95,18 @@ public class OrderApiController {
         return orderQueryRepository.findOrderQueryDtos();
     }
 
+    /**
+     * Optimization: Reduces query count to 2.
+     * - First query: Fetch orders.
+     * - Second query: Fetch all order items using IN clause.
+     * - Map order items to their orders in memory.
+     * → Avoids N+1 problem by loading all order items at once.
+     */
+    @GetMapping("/api/v5/orders")
+    public List<OrderQueryDto> ordersV5() {
+        return orderQueryRepository.findAllByDto_optimization();
+    }
+
     @Getter
     static class OrderDto {
         private Long orderId;
