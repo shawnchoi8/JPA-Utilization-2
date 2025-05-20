@@ -67,6 +67,10 @@ public class OrderApiController {
         return result;
     }
 
+    /**
+     * xToOne : fetch join
+     * collection (xToMany) : hibernate.default_batch_fetch_size
+     */
     @GetMapping("/api/v3.1/orders")
     public List<OrderDto> ordersV3_page(
             @RequestParam(value = "offset", defaultValue = "0") int offset,
