@@ -87,6 +87,9 @@ public class OrderApiController {
         return result;
     }
 
+    /**
+     * direct DTO projection in JPA
+     */
     @GetMapping("/api/v4/orders")
     public List<OrderQueryDto> ordersV4() {
         return orderQueryRepository.findOrderQueryDtos();
