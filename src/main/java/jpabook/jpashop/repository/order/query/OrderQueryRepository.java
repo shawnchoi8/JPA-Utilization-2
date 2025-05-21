@@ -48,13 +48,23 @@ public class OrderQueryRepository {
         return result;
     }
 
+    public List<OrderFlatDto> findAllByDto_flat() {
+        return em.createQuery(
+                        "select new jpabook.jpashop.repository.order.query.OrderFlatDto(o.id, m.name, o.orderDate, o.status, d.address, i.name, oi.orderPrice, oi.count)" +
+                                " from Order o" +
+                                " join o.member m" +
+                                " join o.delivery d" +
+                                " join o.orderItems oi" +
+                                " join oi.item i", OrderFlatDto.class)
+                .getResultList();
+    }
+
     /**
      * Reason for not using join fetch:
      * This query does not fetch entire entity objects,
      * but rather selects specific fields to map into a DTO.
      * join fetch cannot be used in DTO projections.
      */
-
     //collection 아닌 부분들 join해서 한방쿼리로 보내기
     private List<OrderQueryDto> findOrders() {
         return em.createQuery(
@@ -64,8 +74,8 @@ public class OrderQueryRepository {
                                 " join o.delivery d", OrderQueryDto.class)
                 .getResultList();
     }
-    //collection
 
+    //collection
     private List<OrderItemQueryDto> findOrderItems(Long orderId) { //
         return em.createQuery(
                         "select new jpabook.jpashop.repository.order.query.OrderItemQueryDto(oi.order.id, i.name, oi.orderPrice, oi.count)" +
